@@ -1,5 +1,5 @@
 # Built using https://coral.withgoogle.com/tutorials/accelerator/
-FROM balenalib/rpi-raspbian
+FROM balenalib/raspberrypi3-debian
 
 # Install some utilities we will need
 RUN apt-get update && apt-get install build-essential wget feh
