@@ -12,7 +12,7 @@ ENV UDEV=1
 
 RUN wget http://storage.googleapis.com/cloud-iot-edge-pretrained-models/edgetpu_api.tar.gz
 
-RUN tar xzf edgetpu_api.tar.gz
+RUN tar xzf edgetpu_api.tar.gz && rm edgetpu_api.tar.gz
 
 WORKDIR /usr/src/app/python-tflite-source
 
@@ -25,5 +25,8 @@ ENV platform raspberry_pi_3b
 RUN yes n | ./install.sh
 
 ADD run.sh /usr/src/app/run.sh
+
+# Some cleanup
+RUN apt-get autoclean && apt-get remove --auto-remove build-essential && apt-get autoremove
 
 CMD ["/usr/src/app/run.sh"]
