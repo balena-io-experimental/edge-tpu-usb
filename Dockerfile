@@ -14,6 +14,16 @@ RUN wget http://storage.googleapis.com/cloud-iot-edge-pretrained-models/edgetpu_
 
 RUN tar xzf edgetpu_api.tar.gz
 
+WORKDIR /usr/src/app/python-tflite-source
+
+# Bypass platform checks as we build on our cloud arm builders and not on device
+RUN sed -i "s|source ./platform_recognizer.sh|#source ./platform_recognizer.sh|g" install.sh
+# Set platform as pi3b
+ENV platform raspberry_pi_3b
+
+# Pass N to the prompt in the install script if we want to overclock the tpu
+RUN yes n | ./install.sh
+
 ADD run.sh /usr/src/app/run.sh
 
 CMD ["/usr/src/app/run.sh"]
