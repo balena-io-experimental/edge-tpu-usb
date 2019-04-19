@@ -10,23 +10,25 @@ WORKDIR /usr/src/app
 # Need udev for some dynamic dev nodes
 ENV UDEV=1
 
-RUN wget http://storage.googleapis.com/cloud-iot-edge-pretrained-models/edgetpu_api.tar.gz
+RUN wget https://dl.google.com/coral/edgetpu_api/edgetpu_api_latest.tar.gz -O edgetpu_api.tar.gz --trust-server-names && \
+    tar xzf edgetpu_api.tar.gz && rm edgetpu_api.tar.gz
 
-RUN tar xzf edgetpu_api.tar.gz && rm edgetpu_api.tar.gz
+WORKDIR /usr/src/app/edgetpu_api
 
-WORKDIR /usr/src/app/python-tflite-source
+ENV MODEL="Raspberry Pi 3 Model B Rev"
+RUN sed -i "s|MODEL=|#MODEL=|g" install.sh
 
-# Bypass platform checks as we build on our cloud arm builders and not on device
-RUN sed -i "s|source ./platform_recognizer.sh|#source ./platform_recognizer.sh|g" install.sh
-# Set platform as pi3b
-ENV platform raspberry_pi_3b
 
 # Pass N to the prompt in the install script if we want to overclock the tpu
 RUN yes n | ./install.sh
 
-ADD run.sh /usr/src/app/run.sh
+# Set our working directory
+WORKDIR /usr/src/app
 
-# Some cleanup
-RUN apt-get autoclean && apt-get remove --auto-remove build-essential && apt-get autoremove
+RUN wget https://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/mobilenet_v2_1.0_224_inat_bird_quant_edgetpu.tflite \
+http://storage.googleapis.com/cloud-iot-edge-pretrained-models/canned_models/inat_bird_labels.txt \
+https://coral.withgoogle.com/static/images/parrot.jpg
 
-CMD ["/usr/src/app/run.sh"]
+COPY run.sh run.sh
+
+CMD ["bash","run.sh"]
