@@ -1,11 +1,10 @@
 #!/bin/bash
 
-cd /usr/src/app/
+cd /usr/share/edgetpu/examples/
 
-# Run an image classification sample
-python3 /usr/local/lib/python3.5/dist-packages/edgetpu/demo/classify_image.py \
---model mobilenet_v2_1.0_224_inat_bird_quant_edgetpu.tflite \
---label inat_bird_labels.txt \
---image parrot.jpg
+python3 classify_image.py \
+--model models/mobilenet_v2_1.0_224_inat_bird_quant_edgetpu.tflite \
+--label models/inat_bird_labels.txt \
+--image images/parrot.jpg
 
 sleep infinity
