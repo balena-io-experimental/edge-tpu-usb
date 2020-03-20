@@ -1,5 +1,5 @@
 # Built using https://coral.withgoogle.com/tutorials/accelerator/
-FROM balenalib/raspberrypi3-debian
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian
 
 # Add Google Coral sources lists
 RUN echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list

@@ -1,14 +1,15 @@
-### Edge TPU USB accelerator
-![](images/coral_usb.jpg)
+### Edge TPU accelerator with balenaOS
 
-This shiny brick is the [Coral USB accelerator](https://coral.withgoogle.com/products/accelerator/) which has Google's Edge TPU inside it.
+#### Supports 
+- [Coral USB accelerator](https://coral.withgoogle.com/products/accelerator/)
+- [Coral Dev board ](https://coral.ai/products/dev-board)
 
-This repository provides an example that sets up the TPU accelerator so that it can be used from within a container running on balenaOS on the balenaFin or the Raspberry Pi 3.
+This repository provides an example that sets up the TPU accelerator so that it can be used from within a container running on balenaOS.
 
 ![](images/coral_fin.jpg)
 Looking sharp with the [balenaFin](https://www.balena.io/fin/)
 
-`Dockerfile` and `run.sh` have quite a few comments regarding the installation of various libraries the coral usb needs.
+`Dockerfile.template` and `run.sh` have quite a few comments regarding the installation of various libraries the coral usb needs.
 
 #### Some image classification
 Output from running one of the example applications that classify an image
